@@ -27,17 +27,20 @@ def rm_rf(path):
 def get_profile(profile='default'):
     # if profile is not default need prefix profile
     if profile != 'default':
+        profile_creds = profile
         profile = 'profile %s' % profile
     home = path.expanduser("~")
+    aws_config = ConfigParser()
+    aws_config.read('%s/.aws/config' % home)
     aws_creds = ConfigParser()
-    aws_creds.read('%s/.aws/config' % home)
+    aws_creds.read('%s/.aws/credentials' % home)
     # this is logic for roles, when using role there may only be region
     try:
-        return { 'aws_access_key_id': aws_creds.get(profile, 'aws_access_key_id'),
-                 'aws_secret_access_key': aws_creds.get(profile, 'aws_secret_access_key'),
-                 'region': aws_creds.get(profile, 'region') }
+        return { 'aws_access_key_id': aws_creds.get(profile_creds, 'aws_access_key_id'),
+                 'aws_secret_access_key': aws_creds.get(profile_creds, 'aws_secret_access_key'),
+                 'region': aws_config.get(profile, 'region') }
     except:
-        return { 'region': aws_creds.get(profile, 'region') }
+        return { 'region': aws_config.get(profile, 'region') }
 
 
 # connect to kms with boto3
