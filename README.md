@@ -11,8 +11,8 @@ For encrypting must have Key-Id
 Tool will only decrypt things that it has encrypted. 
 
 encrypt: 
-```kmstool.py -e --file myfiles.tar --output this.tar.enc --key_id <KMS Key-ID>```
+```kmstool.py -e --file myfiles.tar --output this.tar.enc --key_id <KMS Key-ID> -p <aws profile name>```
 
 decrypt:
-```kmstool.py -d --file this.tar.enc --output myfiles.tar```
+```kmstool.py -d --file this.tar.enc --output myfiles.tar -p <aws profile name>```
 
